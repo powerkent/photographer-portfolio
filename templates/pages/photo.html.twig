@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie - JPhotography{% endblock %}
+
+{% block body %}
+    <section class="single-project">
+        <div class="container">
+            <div class="section-title">
+                <h2>{{ photo.title }}</h2>
+                <p>{{ photo.description }}</p>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="project-holder">
+                        <img src="{{ photo.imagePath }}" alt="" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

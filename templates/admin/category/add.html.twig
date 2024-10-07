@@ -1,0 +1,16 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Ajouter une Catégorie{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une Catégorie</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    <button type="submit">Enregistrer</button>
+    {{ form_end(form) }}
+
+    <div class="back-link">
+        <a href="{{ path('admin_categories') }}">&#8592; Retour à la liste des catégories</a>
+    </div>
+{% endblock %}

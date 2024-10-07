@@ -1,0 +1,48 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion des Photos{% endblock %}
+
+{% block body %}
+    <h1>Gestion des Photos</h1>
+
+    <div class="add-photo">
+        <a href="{{ path('admin_photos_add') }}">Ajouter une nouvelle photo</a>
+    </div>
+
+    {% if photos is not empty %}
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Catégorie</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for photo in photos %}
+                <tr>
+                    <td>{{ photo.id }}</td>
+                    <td>{{ photo.title }}</td>
+                    <td>
+                        {% for category in photo.categories %}
+                            {{ category.name }}{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            Aucune catégorie
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <img src="{{ photo.imagePath }}" alt="{{ photo.title }}" style="max-width: 150px;">
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_photos_delete', {'id': photo.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette photo ?');">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucune photo n'a été trouvée.</p>
+    {% endif %}
+{% endblock %}
