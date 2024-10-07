@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Galerie - JPhotography{% endblock %}
+{% block title %}Galerie - {{ settings_service.getSettings().getName() }}{% endblock %}
 
 {% block hero %}
     <div id="hero-text">

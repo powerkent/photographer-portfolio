@@ -180,7 +180,7 @@ class Settings
         return $this;
     }
 
-    public function getGoogleApiKey(): ?float
+    public function getGoogleApiKey(): ?string
     {
         return $this->googleApiKey;
     }

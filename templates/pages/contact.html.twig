@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact - JPhotography{% endblock %}
+{% block title %}Contact - {{ settings_service.getSettings().getName() }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}

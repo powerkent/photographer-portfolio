@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Entity\Settings;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -28,7 +29,7 @@ class SettingsType extends AbstractType
             ->add('imageFile', FileType::class, [
                 'label' => 'Moi',
                 'mapped' => false,
-                'required' => true,
+                'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '10M',
@@ -39,7 +40,17 @@ class SettingsType extends AbstractType
                         'mimeTypesMessage' => 'Veuillez télécharger une image valide (JPEG ou PNG)',
                     ])
                 ],
-            ])
+            ]);
+
+        if ($options['data']->getImagePath()) {
+            $builder->add('deleteImage', CheckboxType::class, [
+                'label' => 'Supprimer l\'image actuelle',
+                'required' => false,
+                'mapped' => false,
+            ]);
+        }
+
+        $builder
             ->add('email', EmailType::class, [
                 'label' => 'Email de contact',
             ])

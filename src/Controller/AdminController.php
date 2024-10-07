@@ -137,12 +137,15 @@ class AdminController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('deleteImage')->getData()) {
+                $settings->setImage(null);
+            }
+
             $imageFile = $form->get('imageFile')->getData();
 
             if ($imageFile) {
                 $fileName = uniqid() . '.' . $imageFile->guessExtension();
 
-                // Upload to S3
                 $imagePath = $s3Service->upload($imageFile->getPathname(), $fileName);
 
                 $settings->setImagePath($imagePath);
@@ -156,6 +159,7 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/settings.html.twig', [
+            'settings' => $settings,
             'form' => $form->createView(),
         ]);
     }

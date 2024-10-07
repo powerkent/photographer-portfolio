@@ -7,6 +7,13 @@
 
     {{ form_start(form) }}
     {{ form_row(form.name) }}
+    {% if settings.imagePath is not empty %}
+        <div>
+            <p>Image actuelle :</p>
+            <img src="{{ asset(settings.imagePath) }}" alt="Image actuelle" style="max-width: 150px;">
+            {{ form_row(form.deleteImage) }}
+        </div>
+    {% endif %}
     {{ form_row(form.imageFile) }}
     {{ form_row(form.email) }}
     {{ form_row(form.phone) }}
@@ -16,6 +23,7 @@
     {{ form_row(form.subsubtitle) }}
     {{ form_row(form.description1) }}
     {{ form_row(form.description2) }}
+    {{ form_row(form.googleApiKey) }}
     {{ form_row(form.latitude) }}
     {{ form_row(form.longitude) }}
     <button type="submit">Enregistrer</button>

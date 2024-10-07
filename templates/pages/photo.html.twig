@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Galerie - JPhotography{% endblock %}
+{% block title %}Photo - {{ settings_service.getSettings().getName() }}{% endblock %}
 
 {% block body %}
     <section class="single-project">
