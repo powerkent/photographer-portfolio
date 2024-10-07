@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact - JPhotography{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dark-theme.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contactez-moi.!</h2>
+                <p>Vous voulez faire une demande particulière...</p>
+            </div>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_start(contactForm) }}
+                    {{ form_row(contactForm.fullName, {'label': false, 'attr': {'class': 'form-control', 'placeholder': 'Entrez votre nom'}}) }}
+                    {{ form_row(contactForm.email, {'label': false, 'attr': {'class': 'form-control', 'placeholder': 'Entrez votre email'}}) }}
+                    {{ form_row(contactForm.phoneNumber, {'label': false, 'attr': {'class': 'form-control', 'placeholder': 'Entrez votre numéro de téléphone'}}) }}
+                    {{ form_row(contactForm.message, {'label': false, 'attr': {'class': 'form-control', 'placeholder': 'Entrez votre message'}}) }}
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    {{ form_end(contactForm, {'render_rest': false}) }}
+                </div>
+                <div class="col-md-6">
+                    <div id="map"></div>
+                </div>
+            </div>
+            <div class="contact-info">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <i class="fas fa-map"></i>
+                            <p>{{ settings_service.getSettings().getAddress()|raw }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <i class="fas fa-mobile"></i>
+                            <a href="tel:+33{{ settings_service.getSettings().getPhone() }}">{{ settings_service.getSettings().getPhone() }}</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <i class="fas fa-envelope-open"></i>
+                            <a href="mailto:{{ settings_service.getSettings().getEmail() }}">{{ settings_service.getSettings().getEmail() }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="js-map"
+             data-lat="{{ settings_service.getSettings().getLatitude() }}"
+             data-lng="{{ settings_service.getSettings().getLongitude() }}">
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ settings_service.getSettings().getGoogleApiKey() }}&callback=initMap"
+            async defer></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
+    <script>
+        function initMap() {
+            const userMap = document.querySelector('.js-map');
+            var latitude = parseFloat(userMap.getAttribute('data-lat'));
+            var longitude = parseFloat(userMap.getAttribute('data-lng'));
+
+            if (!isNaN(latitude) && !isNaN(longitude)) {
+                var uluru = {lat: latitude, lng: longitude};
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 14,
+                    center: uluru
+                });
+                var marker = new google.maps.Marker({
+                    position: uluru,
+                    map: map
+                });
+            } else {
+                console.error('Les coordonnées de latitude et/ou de longitude sont invalides.');
+            }
+        }
+    </script>
+{% endblock %}

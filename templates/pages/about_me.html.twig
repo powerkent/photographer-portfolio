@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}About Me - {{ settings_service.getSettings().getName() }}{% endblock %}
+
+{% block body %}
+    <section class="about-me">
+        <div class="container">
+            <div class="section-title">
+                <h2>&Agrave; PROPOS DE MOI.!</h2>
+                <p>The Story Of {{ settings_service.getSettings().getName() }}</p>
+            </div>
+            <div class="col-md-6 offset-md-3">
+                <img src="{{ settings_service.getSettings().getImagePath }}" alt="Joode Rock - Photographer" class="img-fluid img-center">
+            </div>
+            <div class="row">
+                <div class="col-md-12 my-name">
+                    <h2>{{ settings_service.getSettings().getTitle() }}</h2>
+                </div>
+                <div class="col-md-4 offset-md-2">
+                    <p class="text-justify">{{ settings_service.getSettings().getDescription1()|raw }}</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="text-justify">{{ settings_service.getSettings().getDescription2()|raw }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

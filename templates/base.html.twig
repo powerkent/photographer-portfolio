@@ -1,17 +1,108 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{{ settings_service.getSettings().getName() }}{% endblock %}</title>
+    <meta name="description" content="{{ settings_service.getSettings().getName() }} - Minimal Photography Portfolio">
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900|Raleway:100,300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-..." crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-..." crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dark-theme.css') }}">
+
+    {% block stylesheets %}
+
+    {% endblock %}
+
+    <!-- HTML5 shim and Respond.js for IE8 support -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<header class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ path('gallery') }}">{{ settings_service.getSettings().getName() }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="icon-bar i1"></span>
+            <span class="icon-bar i2"></span>
+            <span class="icon-bar i3"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarDefault">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item {% if app.request.get('_route') == 'gallery' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('gallery') }}">HOME</a>
+                </li>
+                <li class="nav-item {% if app.request.get('_route') == 'about_me' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('about_me') }}">&Agrave; PROPOS DE MOI</a>
+                </li>
+                <li class="nav-item {% if app.request.get('_route') == 'contact' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('contact') }}">CONTACTEZ-MOI</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    {% block hero %}
+    {% endblock %}
+</header>
+
+
+<section class="borders">
+    <div class="brTR"></div>
+    <div class="brTL"></div>
+    <div class="brBL"></div>
+    <div class="brBR"></div>
+</section>
+
+
+{% block body %}
+
+{% endblock %}
+
+
+<footer>
+    <div class="container-fluid">
+        <div class="footer-info">
+            <div class="footer-title">
+                <h2>{{ settings_service.getSettings().getName() }}</h2>
+                <p>&copy; Copyright {{ "now"|date("Y") }}. All Rights Reserved.</p>
+            </div>
+            <div class="footer-social">
+                <a href="https://www.instagram.com/jooderockphotographe/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.flickr.com/photos/joodeharrison/"><i class="fab fa-flickr"></i></a>
+                <a href="https://www.facebook.com/Jooderockphotography/"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.tumblr.com/joode-rock-photographe"><i class="fab fa-tumblr"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+<script src="{{ asset('js/mixitup.min.js') }}"></script>
+<script src="{{ asset('js/custom.js') }}"></script>
+
+{% block javascripts %}
+
+{% endblock %}
+
+<script>
+    var containerEl = document.querySelector('.mix-container');
+
+    var mixer = mixitup(containerEl, {
+        animation: {
+            effects: 'fade scale stagger(50ms)'
+        }
+    });
+</script>
+</body>
 </html>
